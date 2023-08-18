@@ -97,7 +97,7 @@ namespace SignalRAPI.Repository
                                          on new { A = d.RefId, B = d.CreateDate } equals new {A = x.Key, B = x.LastDate}
                              //where e.ProductId != null
                              orderby d.CreateDate descending
-                             select new
+                             select new ResponseApplicationModel
                              {
                                  ApplicatioNo = e.ApplicationNo,
                                  FlagRead = e.FlagReadAdmin,
@@ -106,8 +106,8 @@ namespace SignalRAPI.Repository
                                                                                 : d.CreateDate.Year == DateTime.Now.Year? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() + d.CreateDate.Year.ToString()
                              };
 
-                var dd  = resultGroup.Select(s => new { ApplicatioNo = s.ApplicatioNo, FlagRead =s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
-                result.AddRange(dd);
+                //var dd  = resultGroup.Select(s => new ResponseApplicationModel { ApplicatioNo = s.ApplicatioNo, FlagRead =s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
+                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicatioNo = s.ApplicatioNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
 
             }
             else
