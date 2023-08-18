@@ -11,6 +11,7 @@ namespace SignalRAPI.Service.Interface
         public string addInsert();
         //public Task<List<ResponseMessageDetailModel>> GetMessageChatByNotiPolicy(RequestDetail request);
         public Task InsertChatAgnPolicy(RequestChatDetail request);
-        public Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request);
+        public Task<List<ResponseApplicationModel>> GetApplicationNo(RequestApplication request);
+        public Task<List<ResponseHistoryModel>> GetHistory(RequestHistory request);
     }
 }

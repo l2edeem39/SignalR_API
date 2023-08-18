@@ -7,7 +7,7 @@ namespace SignalRAPI.Model
 {
     public class ResponseApplicationModel
     {
-        public string ApplicatioNo { get; set; }
+        public string ApplicationNo { get; set; }
         public bool? FlagRead { get; set; }
         public string Message { get; set; }
         public string LastDate { get; set; }

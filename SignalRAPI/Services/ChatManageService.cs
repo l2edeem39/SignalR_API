@@ -44,11 +44,24 @@ namespace SignalRAPI.Service
         //    }
         //}
 
-        public async Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request)
+        public async Task<List<ResponseApplicationModel>> GetApplicationNo(RequestApplication request)
         {
             try
             {
                 var result = await _repo.GetApplicatioNo(request);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<ResponseHistoryModel>> GetHistory(RequestHistory request)
+        {
+            try
+            {
+                var result = await _repo.GetHistory(request);
                 return result;
             }
             catch (Exception ex)

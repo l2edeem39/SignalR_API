@@ -12,5 +12,6 @@ namespace SignalRAPI.Repository
         //public Task<List<NotiPolicy>> GetNotiPolicyAsync(string ApplicationNo);
         public Task<int> InsertChatDetail(RequestChatDetail request);
         public Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request);
+        public Task<List<ResponseHistoryModel>> GetHistory(RequestHistory request);
     }
 }

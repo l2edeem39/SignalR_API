@@ -45,8 +45,20 @@ namespace SignalRAPI.Controllers
                 UserId = UserId,
                 UserType = UserType
             };
-            var result = await _chatService.GetApplicatioNo(request);
+            var result = await _chatService.GetApplicationNo(request);
             return StatusCode(200, new {data = result });
+            //return result;
+        }
+
+        [HttpGet("GetHistory")]
+        public async Task<IActionResult> GetHistory(string ApplicationNo)
+        {
+            var request = new RequestHistory()
+            {
+                ApplicationNo = ApplicationNo
+            };
+            var result = await _chatService.GetHistory(request);
+            return StatusCode(200, new { data = result });
             //return result;
         }
     }

@@ -99,7 +99,7 @@ namespace SignalRAPI.Repository
                              orderby d.CreateDate descending
                              select new ResponseApplicationModel
                              {
-                                 ApplicatioNo = e.ApplicationNo,
+                                 ApplicationNo = e.ApplicationNo,
                                  FlagRead = e.FlagReadAdmin,
                                  Message = d.Message,
                                  LastDate = d.CreateDate.Date == DateTime.Now.Date? d.CreateDate.Hour.ToString()+":"+ d.CreateDate.Minute.ToString() 
@@ -107,7 +107,7 @@ namespace SignalRAPI.Repository
                              };
 
                 //var dd  = resultGroup.Select(s => new ResponseApplicationModel { ApplicatioNo = s.ApplicatioNo, FlagRead =s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
-                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicatioNo = s.ApplicatioNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
+                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
 
             }
             else
@@ -115,6 +115,26 @@ namespace SignalRAPI.Repository
                 result = null;
             }
 
+            return result;
+        }
+
+        public async Task<List<ResponseHistoryModel>> GetHistory(RequestHistory request)
+        {
+            List<ResponseHistoryModel> result = new List<ResponseHistoryModel>();
+
+            var dataDetail = _dbContext.ChatAgnPolicyDetail;
+
+            var resultGroup = from d in dataDetail
+                              where d.ApplicationNo == request.ApplicationNo
+                              orderby d.CreateDate descending
+                              select new ResponseHistoryModel
+                              {
+                                  UserId = d.UserId,
+                                  UserFullName = d.UserFullName,
+                                  Message = d.Message
+                              };
+
+            result = resultGroup.Select(s => new ResponseHistoryModel { UserId = s.UserId, UserFullName = s.UserFullName, Message = s.Message}).ToList();
             return result;
         }
 
