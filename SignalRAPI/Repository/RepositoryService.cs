@@ -126,7 +126,7 @@ namespace SignalRAPI.Repository
 
             var resultGroup = from d in dataDetail
                               where d.ApplicationNo == request.ApplicationNo
-                              orderby d.CreateDate descending
+                              //orderby d.CreateDate descending
                               select new ResponseHistoryModel
                               {
                                   UserId = d.UserId,
