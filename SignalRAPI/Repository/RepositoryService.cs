@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SignalRAPI.Context;
 using SignalRAPI.Entities;
+using SignalRAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace SignalRAPI.Repository
     public class RepositoryService : IRepositoryService
     {
         private readonly DbContextClass _dbContext;
+
+
         public RepositoryService(DbContextClass dbContext)
         {
             _dbContext = dbContext;
@@ -28,12 +31,12 @@ namespace SignalRAPI.Repository
         //    return result;
         //}
 
-        public async Task<List<NotiPolicy>> GetNotiPolicyAsync(string ApplicationNo)
-        {
-            var result = _dbContext.NotiPolicy.ToList();
+        //public async Task<List<NotiPolicy>> GetNotiPolicyAsync(string ApplicationNo)
+        //{
+        //    //var result = _dbContext.NotiPolicy.ToList();
 
-            return result;
-        }
+        //    return result;
+        //}
 
         //public async Task<int> InsertLog(string Id, string IPaddress, string ApiOperation, string ReferenceCode, string PolicyNumber, string Request)
         //{
@@ -49,6 +52,7 @@ namespace SignalRAPI.Repository
         //    });
         //    return _dbContextLogin.SaveChanges();
         //}
+
         //public async Task<int> InsertLogDetail(string Id, string Event, string StatusCode, string Message, int Sequence)
         //{
         //    //var sequence = GetSequenceLogDeatilAsync(Id) + 1;
@@ -64,5 +68,72 @@ namespace SignalRAPI.Repository
         //    });
         //    return _dbContextLogin.SaveChanges();
         //}
+
+        public async Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request)
+        {
+            List<ResponseApplicationModel> result = new List<ResponseApplicationModel>();
+            if (request.UserType.ToUpper() == "ADMIN")
+            {
+                var dataHead = _dbContext.ChatAgnPolicy;
+                var dataDetail = _dbContext.ChatAgnPolicyDetail;
+
+                var queryGroupMax = 
+                    from Detail in dataDetail
+                    group Detail by Detail.RefId into dataDetailGroup
+                    select new
+                    {
+                        Key = dataDetailGroup.Key,
+                        LastDate = (
+                            from Detail2 in dataDetailGroup
+                            select Detail2.CreateDate
+                        ).Max()
+                    };
+
+
+                var resultGroup =  from e in dataHead
+                                  join d in dataDetail
+                                         on e.id equals d.RefId
+                                  join x in queryGroupMax
+                                         on new { A = d.RefId, B = d.CreateDate } equals new {A = x.Key, B = x.LastDate}
+                             //where e.ProductId != null
+                             orderby d.CreateDate descending
+                             select new
+                             {
+                                 ApplicatioNo = e.ApplicationNo,
+                                 FlagRead = e.FlagReadAdmin,
+                                 Message = d.Message,
+                                 LastDate = d.CreateDate.Date == DateTime.Now.Date? d.CreateDate.Hour.ToString()+":"+ d.CreateDate.Minute.ToString() 
+                                                                                : d.CreateDate.Year == DateTime.Now.Year? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() + d.CreateDate.Year.ToString()
+                             };
+
+                var dd  = resultGroup.Select(s => new { ApplicatioNo = s.ApplicatioNo, FlagRead =s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
+                result.AddRange(dd);
+
+            }
+            else
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        public async Task<int> InsertChatDetail(RequestChatDetail request)
+        {
+            //var sequence = GetSequenceLogDeatilAsync(Id) + 1;
+            var idByApplicatioNo = _dbContext.ChatAgnPolicy.Where(u => u.ApplicationNo == request.ApplicatioNo).FirstOrDefault().id;
+
+            _dbContext.ChatAgnPolicyDetail.Add(new ChatAgnPolicyDetail()
+            {
+                Id = new Guid(),
+                ApplicationNo = request.ApplicatioNo,
+                UserId = request.UserId,
+                UserFullName = request.UserFullName,
+                Message = request.Message,
+                CreateDate = DateTime.Now,
+                RefId = idByApplicatioNo
+            });
+            return _dbContext.SaveChanges();
+        }
     }
 }

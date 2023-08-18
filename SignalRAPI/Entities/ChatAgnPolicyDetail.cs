@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace SignalRAPI.Entities
 {
-    [Table("NotiPolicyLiveChatDetail")]
-    public class NotiPolicyLiveChatDetail
+    [Table("chat_agn_policy_Detail")]
+    public class ChatAgnPolicyDetail
     {
+        public Guid Id { get; set; }
         public string ApplicationNo { get; set; }
+        public string UserId { get; set; }
         public string UserFullName { get; set; }
         public string Message { get; set; }
         public DateTime CreateDate { get; set; }

@@ -30,13 +30,38 @@ namespace SignalRAPI.Service
             _repo = repo;
         }
         #endregion
-        public async Task<List<ResponseMessageDetailModel>> GetMessageChatByNotiPolicy(RequestDetail request)
+        //public async Task<List<ResponseMessageDetailModel>> GetMessageChatByNotiPolicy(RequestDetail request)
+        //{
+        //    try
+        //    {
+        //        var result = new List<ResponseMessageDetailModel>();
+        //        var res = await _repo.GetNotiPolicyAsync(request.ApplicatioNo);
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        public async Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request)
         {
             try
             {
-                var result = new List<ResponseMessageDetailModel>();
-                var res = await _repo.GetNotiPolicyAsync(request.ApplicatioNo);
+                var result = await _repo.GetApplicatioNo(request);
                 return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task InsertChatAgnPolicy(RequestChatDetail request)
+        {
+            try
+            {
+                var result = await _repo.InsertChatDetail(request);
             }
             catch (Exception ex)
             {

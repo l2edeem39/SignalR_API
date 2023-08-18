@@ -15,14 +15,18 @@ namespace SignalRAPI.HubSignalr
         {
             _chatService = chatService;
         }
-        public async Task NewMessage(string userId, string userName, string message, string applicationId)
+        public async Task NewMessage(string userId, string userName, string message, string applicationNo)
         {
-            var sde = new RequestDetail()
+            var sde = new RequestChatDetail()
             {
-                ApplicatioNo = applicationId
+                ApplicatioNo = applicationNo,
+                UserId = userId,
+                UserFullName = userName,
+                Message = message
             };
-            var ss = _chatService.GetMessageChatByNotiPolicy(sde);
-            await Clients.All.SendAsync("User", userId, userName, message, applicationId);
+            //var ss = _chatService.GetMessageChatByNotiPolicy(sde);
+            await _chatService.InsertChatAgnPolicy(sde);
+            await Clients.All.SendAsync("User", userId, userName, message, applicationNo);
         }
     }
 }

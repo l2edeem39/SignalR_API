@@ -9,6 +9,8 @@ namespace SignalRAPI.Service.Interface
     public interface IChatManageService
     {
         public string addInsert();
-        public Task<List<ResponseMessageDetailModel>> GetMessageChatByNotiPolicy(RequestDetail request);
+        //public Task<List<ResponseMessageDetailModel>> GetMessageChatByNotiPolicy(RequestDetail request);
+        public Task InsertChatAgnPolicy(RequestChatDetail request);
+        public Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request);
     }
 }
