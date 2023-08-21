@@ -74,7 +74,47 @@ namespace SignalRAPI.Service
         {
             try
             {
+                RequestFlageRead flagRead = new RequestFlageRead();
                 var result = await _repo.InsertChatDetail(request);
+                if (request.UserType.ToUpper() == "ADMIN")
+                {
+                    flagRead.ApplicatioNo = request.ApplicatioNo;
+                    flagRead.UserType = request.UserType;
+                    flagRead.Flag = true;
+                    var resultAdmin = await _repo.UpdateChatHearAgent(flagRead);
+                }
+                else
+                {
+                    flagRead.ApplicatioNo = request.ApplicatioNo;
+                    flagRead.UserType = request.UserType;
+                    flagRead.Flag = true;
+                    var resultAdmin = await _repo.UpdateChatHearAdmin(flagRead);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task UpdateChatAgnPolicyRead(RequestFlageRead request)
+        {
+            try
+            {
+                if (request.UserType.ToUpper() == "ADMIN")
+                {
+                    request.ApplicatioNo = request.ApplicatioNo;
+                    request.Flag = false;
+                    var resultAdmin = await _repo.UpdateChatHearAdmin(request);
+                }
+                else
+                {
+                    request.ApplicatioNo = request.ApplicatioNo;
+                    request.Flag = false;
+                    var resultAdmin = await _repo.UpdateChatHearAgent(request);
+                }
+
             }
             catch (Exception ex)
             {

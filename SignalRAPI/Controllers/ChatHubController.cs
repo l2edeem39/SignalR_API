@@ -23,17 +23,31 @@ namespace SignalRAPI.Controllers
         }
 
         [HttpGet]
-        public async Task NewMessage(string userId, string userName, string message, string applicationNo)
+        public async Task NewMessage(string userId, string userName, string message, string applicationNo, string userType)
         {
-            var sde = new RequestChatDetail()
+            var insert = new RequestChatDetail()
             {
                 ApplicatioNo = applicationNo,
                 UserId = userId,
                 UserFullName = userName,
-                Message = message
+                Message = message,
+                UserType = userType
             };
             //var ss = _chatService.GetMessageChatByNotiPolicy(sde);
-            await _chatService.InsertChatAgnPolicy(sde);
+            await _chatService.InsertChatAgnPolicy(insert);
+            //await Clients.All.SendAsync("User", userId, userName, message, applicationNo);
+        }
+
+        [HttpGet("UpdateRead")]
+        public async Task UpdateRead(string applicationNo, string userType)
+        {
+            var update = new RequestFlageRead()
+            {
+                ApplicatioNo = applicationNo,
+                UserType = userType
+            };
+            //var ss = _chatService.GetMessageChatByNotiPolicy(sde);
+            await _chatService.UpdateChatAgnPolicyRead(update);
             //await Clients.All.SendAsync("User", userId, userName, message, applicationNo);
         }
 

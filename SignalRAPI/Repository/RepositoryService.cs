@@ -155,5 +155,25 @@ namespace SignalRAPI.Repository
             });
             return _dbContext.SaveChanges();
         }
+
+        public async Task<int> UpdateChatHearAdmin(RequestFlageRead request)
+        {
+            //var sequence = GetSequenceLogDeatilAsync(Id) + 1;
+            var update = _dbContext.ChatAgnPolicy.Where(u => u.ApplicationNo == request.ApplicatioNo).FirstOrDefault();
+            update.FlagReadAdmin = request.Flag;
+
+            return _dbContext.SaveChanges();
+        }
+
+        public async Task<int> UpdateChatHearAgent(RequestFlageRead request)
+        {
+            //var sequence = GetSequenceLogDeatilAsync(Id) + 1;
+            //var idByApplicatioNo = _dbContext.ChatAgnPolicy.Where(u => u.ApplicationNo == request.ApplicatioNo).FirstOrDefault().id;
+
+            var update = _dbContext.ChatAgnPolicy.Where(u => u.ApplicationNo == request.ApplicatioNo).FirstOrDefault();
+            update.FlagReadAgent = request.Flag;
+
+            return _dbContext.SaveChanges();           
+        }
     }
 }

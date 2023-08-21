@@ -13,5 +13,8 @@ namespace SignalRAPI.Repository
         public Task<int> InsertChatDetail(RequestChatDetail request);
         public Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request);
         public Task<List<ResponseHistoryModel>> GetHistory(RequestHistory request);
+        public Task<int> UpdateChatHearAdmin(RequestFlageRead request);
+
+        public Task<int> UpdateChatHearAgent(RequestFlageRead request);
     }
 }
