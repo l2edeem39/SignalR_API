@@ -100,7 +100,7 @@ namespace SignalRAPI.Repository
                              select new ResponseApplicationModel
                              {
                                  ApplicationNo = e.ApplicationNo,
-                                 FlagRead = e.FlagReadAdmin,
+                                 FlagRead = e.FlagReadAgent,
                                  Message = d.Message,
                                  LastDate = d.CreateDate.Date == DateTime.Now.Date? d.CreateDate.Hour.ToString()+":"+ d.CreateDate.Minute.ToString() 
                                                                                 : d.CreateDate.Year == DateTime.Now.Year? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString()+ "/" + d.CreateDate.Year.ToString()
