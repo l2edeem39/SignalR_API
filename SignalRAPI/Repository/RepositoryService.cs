@@ -100,10 +100,10 @@ namespace SignalRAPI.Repository
                              select new ResponseApplicationModel
                              {
                                  ApplicationNo = e.ApplicationNo,
-                                 FlagRead = e.FlagReadAgent,
+                                 FlagRead = e.FlagReadAdmin,
                                  Message = d.Message,
-                                 LastDate = d.CreateDate.Date == DateTime.Now.Date? d.CreateDate.Hour.ToString()+":"+ d.CreateDate.Minute.ToString() 
-                                                                                : d.CreateDate.Year == DateTime.Now.Year? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString()+ "/" + d.CreateDate.Year.ToString()
+                                 LastDate = d.CreateDate.Date == DateTime.Now.Date ? d.CreateDate.ToString("HH:mm")
+                                                                                     : d.CreateDate.Year == DateTime.Now.Year ? d.CreateDate.ToString("dd/MM") : d.CreateDate.ToString("dd/MM/yyyy")
                              };
 
                 result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
@@ -137,10 +137,10 @@ namespace SignalRAPI.Repository
                                   select new ResponseApplicationModel
                                   {
                                       ApplicationNo = e.ApplicationNo,
-                                      FlagRead = e.FlagReadAdmin,
+                                      FlagRead = e.FlagReadAgent,
                                       Message = d.Message,
-                                      LastDate = d.CreateDate.Date == DateTime.Now.Date ? d.CreateDate.Hour.ToString() + ":" + d.CreateDate.Minute.ToString()
-                                                                                     : d.CreateDate.Year == DateTime.Now.Year ? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() + "/" + d.CreateDate.Year.ToString()
+                                      LastDate = d.CreateDate.Date == DateTime.Now.Date ? d.CreateDate.ToString("HH:mm")
+                                                                                     : d.CreateDate.Year == DateTime.Now.Year ? d.CreateDate.ToString("dd/MM") : d.CreateDate.ToString("dd/MM/yyyy")
                                   };
 
                 result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
