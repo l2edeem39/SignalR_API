@@ -103,7 +103,7 @@ namespace SignalRAPI.Repository
                                  FlagRead = e.FlagReadAdmin,
                                  Message = d.Message,
                                  LastDate = d.CreateDate.Date == DateTime.Now.Date? d.CreateDate.Hour.ToString()+":"+ d.CreateDate.Minute.ToString() 
-                                                                                : d.CreateDate.Year == DateTime.Now.Year? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() + d.CreateDate.Year.ToString()
+                                                                                : d.CreateDate.Year == DateTime.Now.Year? d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString() : d.CreateDate.Day.ToString() + "/" + d.CreateDate.Month.ToString()+ "/" + d.CreateDate.Year.ToString()
                              };
 
                 //var dd  = resultGroup.Select(s => new ResponseApplicationModel { ApplicatioNo = s.ApplicatioNo, FlagRead =s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
