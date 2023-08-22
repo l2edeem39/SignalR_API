@@ -9,5 +9,6 @@ namespace SignalRAPI.Model
     {
         public string UserId { get; set; }
         public string UserType { get; set; }
+        public int PageScroll { get; set; } = 1;
     }
 }

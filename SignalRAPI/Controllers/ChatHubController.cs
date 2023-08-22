@@ -52,12 +52,13 @@ namespace SignalRAPI.Controllers
         }
 
         [HttpGet("GetApplicationNo")]
-        public async Task<IActionResult> GetApplicationNo(string UserId, string UserType)
+        public async Task<IActionResult> GetApplicationNo(string UserId, string UserType, int PageScroll)
         {
             var request = new RequestApplication()
             {
                 UserId = UserId,
-                UserType = UserType
+                UserType = UserType,
+                PageScroll = PageScroll
             };
             var result = await _chatService.GetApplicationNo(request);
             return StatusCode(200, new {data = result });

@@ -71,6 +71,8 @@ namespace SignalRAPI.Repository
 
         public async Task<List<ResponseApplicationModel>> GetApplicatioNo(RequestApplication request)
         {
+            int page = 8;
+            int pageAll = (page * request.PageScroll);
             List<ResponseApplicationModel> result = new List<ResponseApplicationModel>();
             if (request.UserType.ToUpper() == "ADMIN")
             {
@@ -106,7 +108,7 @@ namespace SignalRAPI.Repository
                                                                                      : d.CreateDate.Year == DateTime.Now.Year ? d.CreateDate.ToString("dd/MM") : d.CreateDate.ToString("dd/MM/yyyy")
                              };
 
-                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
+                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).Take(pageAll).ToList();
 
             }
             else
@@ -143,7 +145,7 @@ namespace SignalRAPI.Repository
                                                                                      : d.CreateDate.Year == DateTime.Now.Year ? d.CreateDate.ToString("dd/MM") : d.CreateDate.ToString("dd/MM/yyyy")
                                   };
 
-                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).ToList();
+                result = resultGroup.Select(s => new ResponseApplicationModel { ApplicationNo = s.ApplicationNo, FlagRead = s.FlagRead, Message = s.Message, LastDate = s.LastDate }).Take(pageAll).ToList();
             }
 
             return result;
